@@ -1,49 +1,57 @@
 function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Top Left Corner */}
-          <div className="flex-shrink-0">
-            <a href="#home" className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-sky-600 inline-block"></span>
-              One Pager
-            </a>
-          </div>
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-3' : 'bg-white/95 backdrop-blur-sm py-4 border-b border-slate-100'}`}>
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        
+        {/* Top left corner brand */}
+        <a href="#home" className="text-2xl font-heading font-extrabold tracking-tight text-[#222831] flex items-center gap-1.5">
+          <span>One</span>
+          <span className="text-[#00adb5]">Pager</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00adb5] inline-block mb-1"></span>
+        </a>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#home" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Home</a>
-            <a href="#portfolio" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">PortFolio</a>
-            <a href="#services" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Services</a>
-            <a href="#about" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">About</a>
-            <a href="#contact" className="px-4 py-2 text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 rounded-md transition-all shadow-sm">Contact Us</a>
-          </div>
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center space-x-8">
+          <a href="#home" className="text-xs uppercase tracking-widest font-heading font-semibold text-slate-700 hover:text-[#00adb5] transition-colors">Home</a>
+          <a href="#portfolio" className="text-xs uppercase tracking-widest font-heading font-semibold text-slate-700 hover:text-[#00adb5] transition-colors">PortFolio</a>
+          <a href="#services" className="text-xs uppercase tracking-widest font-heading font-semibold text-slate-700 hover:text-[#00adb5] transition-colors">Services</a>
+          <a href="#about" className="text-xs uppercase tracking-widest font-heading font-semibold text-slate-700 hover:text-[#00adb5] transition-colors">About</a>
+          <a href="#contact" className="px-5 py-2.5 text-xs uppercase tracking-widest font-heading font-bold text-white bg-[#00adb5] hover:bg-[#008b92] rounded transition-all shadow-sm">
+            Contact Us
+          </a>
+        </nav>
 
-          {/* Mobile Toggle */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-slate-600 hover:text-slate-900 focus:outline-none p-2"
-            >
-              <i className={mobileMenuOpen ? "fa-solid fa-xmark text-xl" : "fa-solid fa-bars text-xl"}></i>
-            </button>
-          </div>
-        </div>
+        {/* Mobile Hamburger */}
+        <button 
+          onClick={() => setIsOpen(!isOpen)} 
+          className="md:hidden text-slate-800 text-xl focus:outline-none p-1"
+          aria-label="Toggle Menu"
+        >
+          <i className={isOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars"}></i>
+        </button>
       </div>
 
-      {/* Mobile Links */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
-          <a href="#home" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-700 hover:text-sky-600">Home</a>
-          <a href="#portfolio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-700 hover:text-sky-600">PortFolio</a>
-          <a href="#services" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-700 hover:text-sky-600">Services</a>
-          <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-slate-700 hover:text-sky-600">About</a>
-          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-base font-medium text-sky-600 font-semibold">Contact Us</a>
+      {/* Mobile Menu Dropdown */}
+      {isOpen && (
+        <div className="md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3">
+          <a href="#home" onClick={() => setIsOpen(false)} className="block text-xs uppercase font-heading font-semibold text-slate-800 py-1 hover:text-[#00adb5]">Home</a>
+          <a href="#portfolio" onClick={() => setIsOpen(false)} className="block text-xs uppercase font-heading font-semibold text-slate-800 py-1 hover:text-[#00adb5]">PortFolio</a>
+          <a href="#services" onClick={() => setIsOpen(false)} className="block text-xs uppercase font-heading font-semibold text-slate-800 py-1 hover:text-[#00adb5]">Services</a>
+          <a href="#about" onClick={() => setIsOpen(false)} className="block text-xs uppercase font-heading font-semibold text-slate-800 py-1 hover:text-[#00adb5]">About</a>
+          <a href="#contact" onClick={() => setIsOpen(false)} className="block text-xs uppercase font-heading font-bold text-[#00adb5] py-1">Contact Us</a>
         </div>
       )}
-    </nav>
+    </header>
   );
 }

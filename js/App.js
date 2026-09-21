@@ -1,6 +1,6 @@
 function App() {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       <Hero />
       <Portfolio />
@@ -12,4 +12,5 @@ function App() {
   );
 }
 
+// Mount the React Application
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);

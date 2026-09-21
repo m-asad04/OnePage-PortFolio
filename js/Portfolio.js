@@ -1,96 +1,118 @@
 function Portfolio() {
-  const [portfolioTab, setPortfolioTab] = React.useState('All');
+  const [activeTab, setActiveTab] = React.useState('All');
 
-  const portfolioItems = [
+  // Separated categories
+  const categories = ['All', 'Web Development', 'Digital Marketing', 'Graphic Designing'];
+
+  const items = [
     {
       id: 1,
+      title: "Cool App Design",
       category: "Web Development",
-      title: "Modern Web Platform",
-      subtitle: "Clean, responsive user interfaces and robust web experiences.",
-      image: "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800&q=80"
+      tags: "Development, Responsive",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 2,
+      title: "Creative Web Portal",
       category: "Web Development",
-      title: "Interactive Web Portal",
-      subtitle: "High-performance front-end architecture and clean layouts.",
+      tags: "Modern UI, React",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 3,
+      title: "Useful SEO Campaign",
       category: "Digital Marketing",
-      title: "Targeted SEO & Growth",
-      subtitle: "Organic traffic scaling and keyword optimization strategies.",
+      tags: "Growth, Analytics",
       image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 4,
+      title: "Performance Ads Matrix",
       category: "Digital Marketing",
-      title: "Social Advertising Campaigns",
-      subtitle: "Conversion-optimized performance campaigns and visual ads.",
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80"
+      tags: "Targeting, Conversions",
+      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 5,
+      title: "Modern Brand Identity",
       category: "Graphic Designing",
-      title: "Brand Identity Design",
-      subtitle: "Creative logos, color schemes, typography, and guidelines.",
+      tags: "Branding, Logo",
       image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: 6,
+      title: "Visual Poster Artworks",
       category: "Graphic Designing",
-      title: "Creative Visual Layouts",
-      subtitle: "Marketing banners, social graphics, and promotional layouts.",
+      tags: "Vector, Print & Web",
       image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80"
     }
   ];
 
-  const filteredPortfolio = portfolioTab === 'All' 
-    ? portfolioItems 
-    : portfolioItems.filter(item => item.category === portfolioTab);
+  const filtered = activeTab === 'All' 
+    ? items 
+    : items.filter(i => i.category === activeTab);
 
   return (
-    <section id="portfolio" className="py-20 bg-slate-50 border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-3xl font-bold text-slate-900">PortFolio</h2>
-          <p className="mt-2 text-slate-600">Explore works categorized by discipline.</p>
-          
-          <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {['All', 'Web Development', 'Digital Marketing', 'Graphic Designing'].map((tab) => (
+    <section id="portfolio" className="py-24 bg-[#f8fafc]">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl md:text-4xl font-heading font-extrabold uppercase text-[#222831] tracking-tight">
+            Our PortFolio
+          </h2>
+          <div className="w-12 h-1 bg-[#00adb5] mx-auto mt-3 mb-4"></div>
+          <p className="text-sm text-slate-500">
+            Selected showcase of recent client creations and digital productions.
+          </p>
+
+          {/* Filter Tabs */}
+          <div className="mt-8 flex flex-wrap justify-center gap-2">
+            {categories.map((cat) => (
               <button
-                key={tab}
-                onClick={() => setPortfolioTab(tab)}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
-                  portfolioTab === tab
-                    ? 'bg-sky-600 text-white shadow-sm'
-                    : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-100'
+                key={cat}
+                onClick={() => setActiveTab(cat)}
+                className={`px-5 py-2 text-xs font-heading font-bold uppercase tracking-wider rounded transition-all ${
+                  activeTab === cat
+                    ? 'bg-[#00adb5] text-white shadow'
+                    : 'bg-white text-slate-600 border border-slate-200 hover:border-[#00adb5] hover:text-[#00adb5]'
                 }`}
               >
-                {tab}
+                {cat}
               </button>
             ))}
           </div>
         </div>
 
+        {/* Portfolio Showcase Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPortfolio.map((item) => (
-            <div key={item.id} className="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition">
-              <div className="h-52 overflow-hidden bg-slate-100">
+          {filtered.map((item) => (
+            <div 
+              key={item.id} 
+              className="group relative bg-white rounded overflow-hidden shadow-sm border border-slate-200 transition-all duration-300 hover:shadow-lg"
+            >
+              <div className="relative h-64 overflow-hidden bg-slate-100">
                 <img 
                   src={item.image} 
                   alt={item.title} 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                 />
+                {/* OnePager Styled Hover Overlay */}
+                <div className="absolute inset-0 bg-[#222831]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-center p-6">
+                  <span className="text-[#00adb5] text-xs font-heading uppercase font-bold tracking-widest mb-1">
+                    {item.category}
+                  </span>
+                  <h4 className="text-white font-heading font-bold text-lg">{item.title}</h4>
+                  <p className="text-slate-300 text-xs mt-1">{item.tags}</p>
+                </div>
               </div>
-              <div className="p-6">
-                <span className="text-xs font-semibold text-sky-600 uppercase tracking-wide">
+              <div className="p-5 border-t border-slate-100">
+                <span className="text-[11px] font-heading font-semibold uppercase tracking-wider text-[#00adb5] block mb-1">
                   {item.category}
                 </span>
-                <h3 className="mt-1 text-lg font-bold text-slate-900">{item.title}</h3>
-                <p className="mt-2 text-sm text-slate-600">{item.subtitle}</p>
+                <h3 className="font-heading font-bold text-[#222831] text-base">{item.title}</h3>
               </div>
             </div>
           ))}
